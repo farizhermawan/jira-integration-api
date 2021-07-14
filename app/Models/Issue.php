@@ -72,7 +72,7 @@ class Issue extends Model
     $jiraIssue = $jira->getIssue($issue->ref);
     foreach ($jiraIssue->fields->subtasks as $subtask) {
       $subIssue = $jira->getIssue($subtask->id);
-//      self::upsert($issue->sprint_id, $subtask->id, $subIssue, $issue->issue_key);
+      self::upsert($issue->sprint_id, $subtask->id, $subIssue, $issue->issue_key);
       $result[] = $subtask->id;
     }
     return $result;
