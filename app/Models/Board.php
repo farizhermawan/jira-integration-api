@@ -14,8 +14,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property array|null $additional_data
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Sprint[] $sprints
- * @property-read int|null $sprints_count
  * @method static \Illuminate\Database\Eloquent\Builder|Board newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Board newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Board query()
@@ -54,10 +52,5 @@ class Board extends Model
       $board->save();
     }
     return $board;
-  }
-
-  public function sprints()
-  {
-    return $this->hasMany(Sprint::class);
   }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\RestResponse;
 use App\Models\Issue;
 use App\Models\Sprint;
+use App\Models\Worklog;
 use Illuminate\Http\Request;
 
 class IssueController extends Controller
@@ -50,6 +51,16 @@ class IssueController extends Controller
     if ($request->has('sync')) {
       return RestResponse::data(['data' => Issue::getSubTasksFromJira($issue)]);
     }
-    return RestResponse::data(Issue::whereId($issue)->first());
+
+    $data = Issue::whereId($issue)->first();
+    $sum = Issue::selectRaw("SUM(original_estimate) as original_estimate, SUM(time_spent) as time_spent, SUM(remaining_estimate) as remaining_estimate")
+      ->whereSprintId($data->sprint_id)->whereParent($data->issue_key)->first();
+
+    $data->total_original_estimate = intval($sum['original_estimate']);
+    $data->total_time_spent = intval($sum['time_spent']);
+    $data->total_remaining_estimate = intval($sum['remaining_estimate']);
+    $data->subtasks = Issue::whereSprintId($data->sprint_id)->whereParent($data->issue_key)->whereType('Sub-task')->get();
+    $data->worklogs = Worklog::whereIssueId($data->id)->get();
+    return RestResponse::data($data);
   }
 }

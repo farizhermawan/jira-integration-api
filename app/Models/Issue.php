@@ -22,9 +22,6 @@ use Illuminate\Support\Str;
  * @property string $state
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Sprint $sprint
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Worklog[] $worklogs
- * @property-read int|null $worklogs_count
  * @method static \Illuminate\Database\Eloquent\Builder|Issue newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Issue newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Issue query()
@@ -102,15 +99,5 @@ class Issue extends Model
     $issue->state = $jiraIssue->fields->status->name;
     $issue->save();
     return $issue;
-  }
-
-  public function sprint()
-  {
-    return $this->belongsTo(Sprint::class);
-  }
-
-  public function worklogs()
-  {
-    return $this->hasMany(Worklog::class);
   }
 }

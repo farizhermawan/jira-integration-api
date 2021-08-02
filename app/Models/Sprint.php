@@ -17,11 +17,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $end_date
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Board $board
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Issue[] $issues
- * @property-read int|null $issues_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Worklog[] $worklogs
- * @property-read int|null $worklogs_count
  * @method static \Illuminate\Database\Eloquent\Builder|Sprint newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Sprint newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Sprint query()
@@ -80,20 +75,5 @@ class Sprint extends Model
     $sprint = Sprint::whereBoardId($board->id)->whereState('active');
     if (!$sprint->exists()) Sprint::getAllSprintFromJira($board->id);
     return $sprint->first();
-  }
-
-  public function board()
-  {
-    return $this->belongsTo(Board::class);
-  }
-
-  public function issues()
-  {
-    return $this->hasMany(Issue::class);
-  }
-
-  public function worklogs()
-  {
-    return $this->hasMany(Worklog::class);
   }
 }

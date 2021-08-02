@@ -17,9 +17,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $time_spent
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Issue $issue
- * @property-read \App\Models\Sprint $sprint
- * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|Worklog newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Worklog newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Worklog query()
@@ -41,19 +38,4 @@ class Worklog extends Model
     'created_at',
     'updated_at',
   ];
-
-  public function user()
-  {
-    return $this->belongsTo(User::class);
-  }
-
-  public function sprint()
-  {
-    return $this->belongsTo(Sprint::class);
-  }
-
-  public function issue()
-  {
-    return $this->belongsTo(Issue::class);
-  }
 }

@@ -20,8 +20,6 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Role[] $roles
  * @property-read int|null $roles_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Worklog[] $worklogs
- * @property-read int|null $worklogs_count
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User query()
@@ -77,10 +75,5 @@ class User extends Authenticatable implements JWTSubject
   public function roles()
   {
     return $this->belongsToMany(Role::class)->withPivot(['is_active', 'expired_at']);
-  }
-
-  public function worklogs()
-  {
-    return $this->hasMany(Worklog::class);
   }
 }
